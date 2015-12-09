@@ -4,10 +4,13 @@ import Header from '../components/Header';
 
 export default class App extends Component {
     render() {
+        const { children } = this.props;
         return (
             <div>
                 <Header />
-                <main role="main"></main>
+                <main role="main">
+                    {children}
+                </main>
                 <Footer />
             </div>
         );

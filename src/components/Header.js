@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 export default class Header extends Component {
     render() {
@@ -14,8 +15,11 @@ export default class Header extends Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav>
-                            <NavItem eventKey={1} href="#">Link</NavItem>
-                            <NavItem eventKey={2} href="#">Link</NavItem>
+                            <LinkContainer to="/new">
+                                <NavItem
+                                    eventKey={1}
+                                    href="/new">New Upload</NavItem>
+                            </LinkContainer>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
