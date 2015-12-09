@@ -1,0 +1,24 @@
+{
+  "name": "penny-toss",
+  "version": "0.0.1",
+  "description": "Front end upload “tosser” for penny-collector.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MRN-Code/penny-toss.git"
+  },
+  "keywords": [
+    "COINS",
+    "upload",
+    "React"
+  ],
+  "author": "Cory Reed <creed@mrn.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MRN-Code/penny-toss/issues"
+  },
+  "homepage": "https://github.com/MRN-Code/penny-toss#readme"
+}
