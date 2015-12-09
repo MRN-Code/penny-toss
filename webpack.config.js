@@ -31,6 +31,12 @@ module.exports = {
             loaders: [ 'babel' ],
             exclude: /node_modules/,
             include: path.join(__dirname, 'src'),
+        }, {
+            test: /\.css$/,
+            loaders: ['style', 'css'],
+        }, {
+            test: /\.(eot|svg|ttf|woff|woff2)$/,
+            loaders: ['file'],
         }]
     },
 };
