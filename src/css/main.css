@@ -1,0 +1,41 @@
+/**
+ * Main application styles.
+ *
+ * @todo  Split into CSS or Sass partials for better organization.
+ */
+
+#root {
+    padding-top: 70px;
+}
+
+/** Footer */
+.site-footer p,
+.site-footer small {
+    display: block;
+    font-size: 85%;
+    line-height: inherit;
+}
+.site-footer a {
+    color: inherit;
+    text-decoration: underline;
+}
+.site-footer a:focus,
+.site-footer a:hover {
+    color: #23527c;
+}
+
+@media (min-width: 768px) {
+    .site-footer {
+        text-align: right;
+    }
+    .site-footer p,
+    .site-footer small {
+        display: inline;
+    }
+    .site-footer p {
+        margin: 0;
+    }
+    .site-footer p:after {
+        content: ' ';
+    }
+}
