@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import FileAdder from '../components/FileAdder';
 import FileItem from '../components/FileItem';
 
@@ -7,6 +8,7 @@ export default class NewUpload extends Component {
     constructor(props) {
         super(props);
         this.onDrop = this.onDrop.bind(this);
+        this.renderNavigation = this.renderNavigation.bind(this);
 
         /**
          * Set the initial state for testing.
@@ -56,6 +58,21 @@ export default class NewUpload extends Component {
             </ul>
         )
     }
+
+    renderNavigation() {
+        if (this.state.files.length) {
+            return (
+                <div className="clearfix">
+                    <LinkContainer to="/edit">
+                        <Button bsStyle="primary" className="pull-right">
+                            Next &rarr;
+                        </Button>
+                    </LinkContainer>
+                </div>
+            );
+        }
+    }
+
     render() {
         return (
             <div className="container-fluid">
@@ -67,9 +84,7 @@ export default class NewUpload extends Component {
                         {this.renderFiles()}
                     </div>
                 </div>
-                <div className="clearfix">
-                    <Button bsStyle="primary" className="pull-right">Next &rarr;</Button>
-                </div>
+                {this.renderNavigation()}
             </div>
         );
     }
