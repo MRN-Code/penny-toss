@@ -17,10 +17,20 @@ export default class NewUpload extends Component {
         };
     }
 
-    onDrop(files) {
-        this.setState({
-            files: files
+    /**
+     * Handle react-dropzone's 'drop' event.
+     *
+     * @param {array} newFiles
+     * @return {undefined}
+     */
+    onDrop(newFiles) {
+        const { files } = this.state;
+
+        newFiles.forEach(file => {
+            files.push(file);
         });
+
+        this.setState({ files });
     }
 
     /** @todo  Convert to redux action */
