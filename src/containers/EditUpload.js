@@ -1,57 +1,80 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Button, Input } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import InputDatePicker from '../components/InputDatePicker';
 import FileTable from '../components/FileTable';
 
-export default class EditUpload extends Component {
+
+class EditUpload extends Component {
     constructor(props) {
         super(props);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.renderDeviceInput = this.renderDeviceInput.bind(this);
+        this.renderNavigation = this.renderNavigation.bind(this);
+        this.renderStudyInput = this.renderStudyInput.bind(this);
     }
     handleDateChange() {
 
     }
+    renderDeviceInput() {
+        const { devices } = this.props;
+
+        return (
+            <Input
+                defaultValue="0"
+                groupClassName="col-sm-4 col-md-3"
+                id="form-control-device"
+                label="Device:"
+                type="select">
+                <option value="0" disabled></option>
+                {devices.map(({id, name}) => {
+                    return <option key={id} value={id}>{name}</option>;
+                })}
+            </Input>
+        );
+    }
+    renderNavigation() {
+        return (
+            <div className="clearfix">
+                <LinkContainer to="/new">
+                    <Button
+                        bsStyle="default"
+                        className="pull-left">&larr; Previous</Button>
+                </LinkContainer>
+                <Button
+                    bsStyle="primary"
+                    className="pull-right"
+                    type="submit">Next &rarr;</Button>
+            </div>
+        );
+    }
+    renderStudyInput() {
+        const { studies } = this.props;
+
+        return (
+            <Input
+                defaultValue="0"
+                groupClassName="col-sm-4 col-md-3"
+                id="form-control-study"
+                label="Study:"
+                ref="studyId"
+                type="select">
+                <option value="0" disabled></option>
+                {studies.map(({id, name}) => {
+                    return <option key={id} value={id}>{name}</option>;
+                })}
+            </Input>
+        );
+    }
     render() {
-        //TODO:  Reduxify files
-        const files = [{
-            name: 'cool.txt',
-            size: 200,
-        }, {
-            name: 'my-sweet-file.mov',
-            size: 1400,
-        }, {
-            name: 'radical.exe',
-            size: 40,
-        }, {
-            name: 'dope-analysis.blob',
-            size: 2048,
-        }];
+        const { files } = this.props;
+
         return (
             <form className="container-fluid">
                 <div className="row">
-                    <Input
-                        defaultValue="0"
-                        groupClassName="col-sm-4 col-md-3"
-                        id="form-control-study"
-                        label="Study:"
-                        type="select">
-                        <option value="0" disabled></option>
-                        <option value="1">Study #1</option>
-                        <option value="2">Study #2</option>
-                        <option value="3">Study #3</option>
-                    </Input>
-                    <Input
-                        defaultValue="0"
-                        groupClassName="col-sm-4 col-md-3"
-                        id="form-control-device"
-                        label="Device:"
-                        type="select">
-                        <option value="0" disabled></option>
-                        <option value="MEG">MEG</option>
-                        <option value="EEG">EEG</option>
-                        <option value="MRI">MRI</option>
-                        <option value="Genetic">Genetic</option>
-                    </Input>
+                    {this.renderStudyInput()}
+                    {this.renderDeviceInput()}
                 </div>
 
                 <div className="row">
@@ -77,15 +100,25 @@ export default class EditUpload extends Component {
                             handleChange={this.handleDateChange} />
                     </div>
                 </div>
-                <div className="clearfix">
-                    <Button
-                        bsStyle="primary"
-                        className="pull-left">&larr; Previous</Button>
-                    <Button
-                        bsStyle="primary"
-                        className="pull-right">Next &rarr;</Button>
-                </div>
+                {this.renderNavigation()}
             </form>
         );
     }
 }
+
+EditUpload.propTypes = {
+    devices: PropTypes.array.isRequired,
+    studies: PropTypes.array.isRequired,
+};
+
+function mapStateToProps(state) {
+    const { devices, files, studies } = state.entities;
+
+    return {
+        files,
+        devices,
+        studies,
+    };
+}
+
+export default connect(mapStateToProps)(EditUpload);

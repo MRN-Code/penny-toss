@@ -1,12 +1,9 @@
-import { routerStateReducer as router } from 'redux-router'
-import { combineReducers } from 'redux'
-
-function dummyReducer(state = {}, action) {
-    return state;
-}
+import { routerStateReducer as router } from 'redux-router';
+import { combineReducers } from 'redux';
+import entities from './entities';
 
 const rootReducer = combineReducers({
-    dummyKey: dummyReducer,
+    entities,
     router,
 });
 

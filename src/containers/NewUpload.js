@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
+
+import { addFiles } from '../actions';
 import FileAdder from '../components/FileAdder';
 import FileItem from '../components/FileItem';
 
@@ -8,6 +12,7 @@ export default class NewUpload extends Component {
     constructor(props) {
         super(props);
         this.onDrop = this.onDrop.bind(this);
+        this.handleNavigation = this.handleNavigation.bind(this);
         this.renderNavigation = this.renderNavigation.bind(this);
 
         /**
@@ -17,6 +22,16 @@ export default class NewUpload extends Component {
         this.state = {
             files: [],
         };
+    }
+
+    handleNavigation(event) {
+        event.preventDefault();
+
+        const { addFiles, pushState } = this.props;
+        const { files } = this.state;
+
+        addFiles(files);
+        pushState(null, '/edit');
     }
 
     /**
@@ -63,11 +78,12 @@ export default class NewUpload extends Component {
         if (this.state.files.length) {
             return (
                 <div className="clearfix">
-                    <LinkContainer to="/edit">
-                        <Button bsStyle="primary" className="pull-right">
-                            Next &rarr;
-                        </Button>
-                    </LinkContainer>
+                    <Button
+                        bsStyle="primary"
+                        className="pull-right"
+                        onClick={this.handleNavigation}>
+                        Next &rarr;
+                    </Button>
                 </div>
             );
         }
@@ -89,3 +105,22 @@ export default class NewUpload extends Component {
         );
     }
 }
+
+NewUpload.propTypes = {
+    addFiles: PropTypes.func.isRequired,
+    files: PropTypes.array.isRequired,
+    pushState: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+    const { files } = state.entities;
+
+    return {
+        files,
+    };
+}
+
+export default connect(mapStateToProps, {
+    addFiles,
+    pushState,
+})(NewUpload);

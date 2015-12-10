@@ -44,6 +44,9 @@ export default class FileTable extends Component {
                     dataField="humanReadableSize"
                     dataSort={true}
                     sortFunc={sortBySize}>Size</TableHeaderColumn>
+                <TableHeaderColumn
+                    dataField="type"
+                    dataSort={true}>Type</TableHeaderColumn>
             </Table>
         );
     }
@@ -54,6 +57,7 @@ FileTable.propTypes = {
         PropTypes.shape({
             name: PropTypes.string.isRequired,
             size: PropTypes.number.isRequired,
+            type: PropTypes.string.isRequired,
         })
     ).isRequired,
 };
