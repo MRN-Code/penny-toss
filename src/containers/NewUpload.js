@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
-import { addFiles } from '../actions';
+import { addFiles, addUpload, removeFiles } from '../actions';
 import FileAdder from '../components/FileAdder';
 import FileItem from '../components/FileItem';
 
@@ -14,56 +14,48 @@ export default class NewUpload extends Component {
         this.onDrop = this.onDrop.bind(this);
         this.handleNavigation = this.handleNavigation.bind(this);
         this.renderNavigation = this.renderNavigation.bind(this);
-
-        /**
-         * Set the initial state for testing.
-         * @todo  Remove and use Redux props
-         */
-        this.state = {
-            files: [],
-        };
     }
 
     handleNavigation(event) {
         event.preventDefault();
 
-        const { addFiles, pushState } = this.props;
-        const { files } = this.state;
+        const { addUpload, files, pushState } = this.props;
 
-        addFiles(files);
+        addUpload({ files });
         pushState(null, '/edit');
     }
 
     /**
      * Handle react-dropzone's 'drop' event.
      *
-     * @param {array} newFiles
+     * @param {array} files
      * @return {undefined}
      */
-    onDrop(newFiles) {
-        const { files } = this.state;
+    onDrop(files) {
+        const { addFiles } = this.props;
 
-        newFiles.forEach(file => {
-            files.push(file);
-        });
-
-        this.setState({ files });
+        addFiles(files);
     }
 
-    /** @todo  Convert to redux action */
-    removeFile(name) {
-        this.setState({
-            files: this.state.files.filter(file => file.name !== name),
-        });
+    /**
+     * Remove a file.
+     *
+     * @param {(File|array)} files
+     * @return {undefined}
+     */
+    removeFile(files) {
+        const { removeFiles } = this.props;
+
+        removeFiles(Array.isArray(files) ? files : [files]);
     }
 
     renderFiles() {
-        const { files } = this.state;
+        const { files } = this.props;
 
         return (
             <ul className="list-unstyled">
                 {files.map((file, index) => {
-                    const remove = this.removeFile.bind(this, file.name);
+                    const remove = this.removeFile.bind(this, file);
                     return (
                         <li key={index}>
                             <FileItem file={file} remove={remove} />
@@ -75,7 +67,7 @@ export default class NewUpload extends Component {
     }
 
     renderNavigation() {
-        if (this.state.files.length) {
+        if (this.props.files.length) {
             return (
                 <div className="clearfix">
                     <Button
@@ -107,13 +99,13 @@ export default class NewUpload extends Component {
 }
 
 NewUpload.propTypes = {
-    addFiles: PropTypes.func.isRequired,
+    addUpload: PropTypes.func.isRequired,
     files: PropTypes.array.isRequired,
     pushState: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-    const { files } = state.entities;
+    const { files } = state.upload;
 
     return {
         files,
@@ -122,5 +114,7 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
     addFiles,
+    addUpload,
+    removeFiles,
     pushState,
 })(NewUpload);

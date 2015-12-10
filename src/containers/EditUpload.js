@@ -2,20 +2,33 @@ import React, { Component, PropTypes } from 'react';
 import { Button, Input } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import InputDatePicker from '../components/InputDatePicker';
-import FileTable from '../components/FileTable';
 
+import { editUpload } from '../actions';
+import FileTable from '../components/FileTable';
+import InputDatePicker from '../components/InputDatePicker';
 
 class EditUpload extends Component {
     constructor(props) {
         super(props);
-        this.handleDateChange = this.handleDateChange.bind(this);
+        this.handleNewUpload = this.handleNewUpload.bind(this);
         this.renderDeviceInput = this.renderDeviceInput.bind(this);
         this.renderNavigation = this.renderNavigation.bind(this);
         this.renderStudyInput = this.renderStudyInput.bind(this);
     }
-    handleDateChange() {
+    handleNewUpload(event) {
+        event.preventDefault();
 
+        const { editUpload, files } = this.props;
+        const { device, sessionId, study, ursi, visitDate } = this.refs;
+
+        editUpload({
+            date: Date.now(),
+            deviceId: device.getValue(),
+            sessionId: sessionId.getValue(),
+            studyId: study.getValue(),
+            ursi: ursi.getValue(),
+            visitDate: visitDate.getValue(),
+        });
     }
     renderDeviceInput() {
         const { devices } = this.props;
@@ -26,6 +39,7 @@ class EditUpload extends Component {
                 groupClassName="col-sm-4 col-md-3"
                 id="form-control-device"
                 label="Device:"
+                ref="device"
                 type="select">
                 <option value="0" disabled></option>
                 {devices.map(({id, name}) => {
@@ -45,6 +59,7 @@ class EditUpload extends Component {
                 <Button
                     bsStyle="primary"
                     className="pull-right"
+                    onClick={this.handleNewUpload}
                     type="submit">Next &rarr;</Button>
             </div>
         );
@@ -58,7 +73,7 @@ class EditUpload extends Component {
                 groupClassName="col-sm-4 col-md-3"
                 id="form-control-study"
                 label="Study:"
-                ref="studyId"
+                ref="study"
                 type="select">
                 <option value="0" disabled></option>
                 {studies.map(({id, name}) => {
@@ -85,18 +100,17 @@ class EditUpload extends Component {
                         <Input
                             id="form-control-ursi"
                             label="URSI:"
-                            type="text" />
-                        <Input
-                            id="form-control-visit"
-                            label="Visit:"
+                            ref="ursi"
                             type="text" />
                         <Input
                             id="form-control-session-id"
                             label="Session ID:"
+                            ref="sessionId"
                             type="text" />
                         <InputDatePicker
                             id="form-control-date"
                             label="Visit Date:"
+                            ref="visitDate"
                             handleChange={this.handleDateChange} />
                     </div>
                 </div>
@@ -112,7 +126,8 @@ EditUpload.propTypes = {
 };
 
 function mapStateToProps(state) {
-    const { devices, files, studies } = state.entities;
+    const { devices, studies } = state.entities;
+    const { files } = state.upload;
 
     return {
         files,
@@ -121,4 +136,6 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(EditUpload);
+export default connect(mapStateToProps, {
+    editUpload,
+})(EditUpload);

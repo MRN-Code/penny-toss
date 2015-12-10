@@ -8,27 +8,37 @@ import DateTimeField from 'react-bootstrap-datetimepicker';
 import 'react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css';
 import moment from 'moment';
 
-export default function InputDatePicker(props) {
-    const { handleChange, id, label, startDate } = props;
+export default class InputDatePicker extends Component {
+    getValue() {
+        const { ref } = this.props;
 
-    return (
-        <div className="form-group">
-            <label className="control-label" htmlFor={id}>{label}</label>
-            <DateTimeField
-                dateTime={startDate}
-                inputProps={{ id }}
-                onChange={handleChange} />
-        </div>
-    );
+        return this.refs[ref].getValue();
+    }
+    render() {
+        const { handleChange, id, label, ref, startDate } = this.props;
+
+        return (
+            <div className="form-group">
+                <label className="control-label" htmlFor={id}>{label}</label>
+                <DateTimeField
+                    dateTime={startDate}
+                    inputProps={{ id }}
+                    onChange={handleChange}
+                    ref={ref} />
+            </div>
+        );
+    }
 }
 
 InputDatePicker.defaultProps = {
+    ref: 'input-date-picker',
     startDate: moment().format('x'),
 };
 
 InputDatePicker.propTypes = {
-    handleChange: PropTypes.func.isRequired,
+    handleChange: PropTypes.func,
     id: PropTypes.string,
     label: PropTypes.string.isRequired,
+    ref: PropTypes.string,
     startDate: PropTypes.string,
 };
