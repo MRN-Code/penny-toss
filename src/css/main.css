@@ -82,3 +82,35 @@
 .uploads-filters {
     margin-bottom: 20px;
 }
+
+/**
+ * File Adder component.
+ *
+ * Custom styles for the react-dropzone component.
+ */
+.file-adder {
+
+}
+.file-adder-dropzone {
+    background: #eee;
+    border: 2px dashed;
+    border-radius: 4px;
+    color: #777;
+    display: flex;
+    flex-direction: column;
+    height: 20em;
+    justify-content: center;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.file-adder-dropzone-text {
+    cursor: pointer;
+}
+.file-adder-info {
+    font-size: 85%;
+    display: inline-block;
+    padding: .85em .5em 0 0;
+}
+.file-adder-btn {
+    vertical-align: top;
+}

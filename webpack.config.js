@@ -6,6 +6,7 @@
 
 'use strict';
 
+var autoprefixer = require('autoprefixer');
 var path = require('path');
 var webpack = require('webpack');
 
@@ -33,10 +34,13 @@ module.exports = {
             include: path.join(__dirname, 'src'),
         }, {
             test: /\.css$/,
-            loaders: ['style', 'css'],
+            loaders: ['style', 'css', 'postcss'],
         }, {
             test: /\.(eot|svg|ttf|woff|woff2)$/,
             loaders: ['file'],
         }]
+    },
+    postcss: function() {
+        return [autoprefixer];
     },
 };

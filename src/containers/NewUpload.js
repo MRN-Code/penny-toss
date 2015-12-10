@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-
-/**
- * Uses react-dropzone component:
- * @{@link  https://github.com/paramaggarwal/react-dropzone}
- */
-import Dropzone from 'react-dropzone';
+import FileAdder from '../components/FileAdder';
 import FileItem from '../components/FileItem';
 
 export default class NewUpload extends Component {
     constructor(props) {
         super(props);
         this.onDrop = this.onDrop.bind(this);
-        this.onOpenClick = this.onOpenClick.bind(this);
 
         /**
          * Set the initial state for testing.
@@ -22,6 +16,7 @@ export default class NewUpload extends Component {
             files: [],
         };
     }
+
     onDrop(files) {
         this.setState({
             files: files
@@ -35,9 +30,6 @@ export default class NewUpload extends Component {
         });
     }
 
-    onOpenClick() {
-      this.refs.dropzone.open();
-    }
     renderFiles() {
         const { files } = this.state;
 
@@ -58,13 +50,10 @@ export default class NewUpload extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-sm-4">
-                        <Button onClick={this.onOpenClick}>Add files</Button>
-                        <Dropzone ref="dropzone" onDrop={this.onDrop}>
-                            <div>Drag files here to upload</div>
-                        </Dropzone>
+                    <div className="col-sm-6">
+                        <FileAdder onDrop={this.onDrop} />
                     </div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-6">
                         {this.renderFiles()}
                     </div>
                 </div>
