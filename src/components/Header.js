@@ -16,9 +16,12 @@ export default class Header extends Component {
                     <Navbar.Collapse>
                         <Nav>
                             <LinkContainer to="/new">
-                                <NavItem
-                                    eventKey={1}
-                                    href="/new">New Upload</NavItem>
+                                <NavItem href="/new">New Upload</NavItem>
+                            </LinkContainer>
+                        </Nav>
+                        <Nav>
+                            <LinkContainer to="/edit">
+                                <NavItem href="/edit">Edit</NavItem>
                             </LinkContainer>
                         </Nav>
                     </Navbar.Collapse>
