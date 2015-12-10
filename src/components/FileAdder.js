@@ -21,7 +21,7 @@ export default class FileAdder extends Component {
             <div className="file-adder">
                 <Dropzone
                     className="file-adder-dropzone"
-                    onDrop={this.onDrop}
+                    onDrop={onDrop}
                     ref="dropzone">
                     <div className="file-adder-dropzone-text">
                         Drag files here to upload

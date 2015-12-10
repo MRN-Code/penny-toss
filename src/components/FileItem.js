@@ -8,16 +8,27 @@ export default function FileItem(props) {
      * `props.file` is a browser `File` object.
      * @{@link  https://developer.mozilla.org/en-US/docs/Web/API/File}
      */
-    const { file: { name, size }, remove } = props;
+    const { file: { name, size, preview }, remove } = props;
 
     return (
         <div className="file-item">
-            <h3 className="file-item-name h5">{name}</h3>
-            <p className="file-item-size text-muted h6">{filesize(size)}</p>
-            <Button
-                bsStyle="danger"
-                className="file-item-button"
-                onClick={remove}>Remove</Button>
+            <div className="media">
+                <div className="media">
+                    <div className="media-left">
+                        <img className="media-object" src={preview} />
+                    </div>
+                    <div className="media-body">
+                        <h5 className="media-heading">{name}</h5>
+                        <p className="file-item-size text-muted">
+                            {filesize(size)}
+                        </p>
+                        <Button
+                            bsStyle="danger"
+                            className="file-item-button"
+                            onClick={remove}>Remove</Button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
