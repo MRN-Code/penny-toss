@@ -24,6 +24,11 @@ export default class Header extends Component {
                                 <NavItem href="/edit">Edit</NavItem>
                             </LinkContainer>
                         </Nav>
+                        <Nav>
+                            <LinkContainer to="/list">
+                                <NavItem href="/list">List</NavItem>
+                            </LinkContainer>
+                        </Nav>
                     </Navbar.Collapse>
                 </Navbar>
             </header>
