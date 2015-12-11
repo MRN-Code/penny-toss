@@ -14,12 +14,32 @@ export default function Upload(props) {
      * @todo Make a status mapper utility
      */
     let progressStyle;
+    let controls;
     if (status === 'complete') {
         progressStyle = 'success';
     } else if (status === 'paused') {
         progressStyle = 'warning';
+        controls = (
+            <ButtonGroup className="pull-right">
+                <Button bsStyle="primary">Resume</Button>
+                <Button bsStyle="danger">Delete</Button>
+            </ButtonGroup>
+        );
     } else if (status === 'error') {
         progressStyle = 'danger';
+        controls = (
+            <ButtonGroup className="pull-right">
+                <Button bsStyle="primary">Fix Errors</Button>
+                <Button bsStyle="danger">Delete</Button>
+            </ButtonGroup>
+        );
+    } else {
+        controls = (
+            <ButtonGroup className="pull-right">
+                <Button bsStyle="warning">Pause</Button>
+                <Button bsStyle="danger">Delete</Button>
+            </ButtonGroup>
+        );
     }
 
     return (
@@ -36,10 +56,7 @@ export default function Upload(props) {
                 <li>Files #: <strong>{files.length}</strong></li>
             </ul>
             <div className="clearfix">
-                <ButtonGroup className="pull-right">
-                    <Button bsStyle="warning">Pause</Button>
-                    <Button bsStyle="danger">Destroy</Button>
-                </ButtonGroup>
+                {controls}
             </div>
         </Panel>
     );
