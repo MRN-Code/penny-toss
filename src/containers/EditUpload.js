@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { Button, Input } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
+import { pushState } from 'redux-router';
 
-import { editUpload } from '../actions';
+import { uploadEdit } from '../actions';
 import FileTable from '../components/FileTable';
 import InputDatePicker from '../components/InputDatePicker';
 
@@ -18,18 +19,19 @@ class EditUpload extends Component {
     handleNewUpload(event) {
         event.preventDefault();
 
-        const { editUpload, files, pushState } = this.props;
+        const { currentUploadId, files, pushState, uploadEdit } = this.props;
         const { device, segmentIntervalId, study, ursi, visitDate } = this.refs;
 
         //TODO  Validate upload data
-        editUpload({
-            date: Date.now(),
+        uploadEdit(currentUploadId, {
             deviceId: device.getValue(),
+            files: files,
             segmentIntervalId: segmentIntervalId.getValue(),
             studyId: study.getValue(),
             ursi: ursi.getValue(),
             visitDate: visitDate.getValue(),
         });
+        pushState(null, '/list');
     }
     renderDeviceInput() {
         const { devices } = this.props;
@@ -128,9 +130,10 @@ EditUpload.propTypes = {
 
 function mapStateToProps(state) {
     const { devices, studies } = state.entities;
-    const { files } = state.upload;
+    const { files, upload: currentUploadId } = state.uiActive;
 
     return {
+        currentUploadId,
         files,
         devices,
         studies,
@@ -138,5 +141,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps, {
-    editUpload,
+    pushState,
+    uploadEdit,
 })(EditUpload);

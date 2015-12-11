@@ -16,20 +16,72 @@ export function removeFiles(files) {
     };
 }
 
-export const ADD_UPLOAD = 'ADD_UPLOAD';
+export const UPLOAD_NEW = 'UPLOAD_NEW';
 
-export function addUpload(upload) {
+export function uploadNew(upload) {
+    upload.date = Date.now(); //TODO: Add this at upload network initiation
+    upload.id = Math.random(); //TODO: Use a guid
+    upload.status = 'active';
+
     return {
-        type: ADD_UPLOAD,
+        type: UPLOAD_NEW,
         upload,
     };
 }
 
-export const EDIT_UPLOAD = 'EDIT_UPLOAD';
+export const UPLOAD_EDIT = 'UPLOAD_EDIT';
 
-export function editUpload(upload) {
+/** @todo  Make signature the same as other upload action creators */
+export function uploadEdit(id, upload) {
     return {
-        type: EDIT_UPLOAD,
+        type: UPLOAD_EDIT,
+        id,
         upload,
+    }
+}
+
+export const UPLOAD_PAUSE = 'UPLOAD_PAUSE';
+
+export function uploadPause(id) {
+    return {
+        type: UPLOAD_PAUSE,
+        id,
+    };
+}
+
+export const UPLOAD_REMOVE = 'UPLOAD_REMOVE';
+
+export function uploadRemove(id) {
+    return {
+        type: UPLOAD_REMOVE,
+        id,
+    };
+}
+
+export const UPLOAD_NETWORK_PROGRESS = 'UPLOAD_NETWORK_PROGRESS';
+
+export function uploadNetworkProgress(id, progress) {
+    return {
+        type: UPLOAD_NETWORK_PROGRESS,
+        id,
+        progress,
+    };
+}
+
+export const UPLOAD_NETWORK_ERROR = 'UPLOAD_NETWORK_ERROR';
+
+export function uploadNetworkError(id) {
+    return {
+        type: UPLOAD_NETWORK_ERROR,
+        id,
+    };
+}
+
+export const UPLOAD_COMPLETE = 'UPLOAD_COMPLETE';
+
+export function uploadComplete(id) {
+    return {
+        type: UPLOAD_COMPLETE,
+        id,
     };
 }

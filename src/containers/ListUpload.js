@@ -3,10 +3,11 @@
  */
 import React, { Component, PropTypes } from 'react';
 import Upload from '../components/Upload';
+import { connect } from 'react-redux';
 
 import { Label, Nav, NavItem } from 'react-bootstrap';
 
-export default class ListUpload extends Component {
+class ListUpload extends Component {
     constructor(props) {
         super(props);
         this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -93,44 +94,15 @@ export default class ListUpload extends Component {
     }
 }
 
-ListUpload.defaultProps = {
-    // @todo  Don't hard code!
-    uploads: [{
-        id: 3,
-        studyId: 100,
-        deviceId: 1,
-        files: [6, 7, 8],
-        ursi: 'M1000000',
-        status: 'error',
-        progress: 67,
-    }, {
-        id: 4,
-        studyId: 101,
-        deviceId: 1,
-        files: [9, 10],
-        ursi: 'M1000001',
-        status: 'complete',
-        progress: 100,
-    }, {
-        id: 5,
-        studyId: 100,
-        deviceId: 2,
-        files: [11, 12],
-        ursi: 'M1000002',
-        status: 'active',
-        progress: 21,
-    }, {
-        id: 6,
-        studyId: 100,
-        deviceId: 2,
-        files: [55, 56, 57, 58],
-        ursi: 'M1000003',
-        status: 'active',
-        progress: 80,
-    }]
-};
-
 ListUpload.propTypes = {
     // activeFilter: PropTypes.string, // @todo  Move to routing/state/Redux?
     uploads: PropTypes.array.isRequired,
 };
+
+function mapStateToProps(state) {
+    return {
+        uploads: state.entities.uploads,
+    };
+}
+
+export default connect(mapStateToProps)(ListUpload);

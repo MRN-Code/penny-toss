@@ -1,26 +1,28 @@
 import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
 import entities from './entities';
-import { ADD_FILES, ADD_UPLOAD, EDIT_UPLOAD, REMOVE_FILES } from '../actions';
+import { ADD_FILES, REMOVE_FILES, UPLOAD_NEW } from '../actions';
 import merge from 'lodash/object/merge';
 
-const initialUploadState = {
-    date: null,
-    deviceId: null,
+// const initialUploadState = {
+//     date: null,
+//     deviceId: null,
+//     files: [],
+//     segmentIntervalId: null,
+//     studyId: null,
+//     ursi: null,
+//     user: 'test-username', //TODO: Don't hard code!
+//     visitDate: null,
+// };
+
+const initialUiState = {
+    upload: null,
     files: [],
-    segmentIntervalId: null,
-    studyId: null,
-    ursi: null,
-    user: 'test-username', //TODO: Don't hard code!
-    visitDate: null,
 };
 
 /** @todo  Figure out a better state tree */
-function upload(state = initialUploadState, action) {
+function uiActive(state = initialUiState, action) {
     switch(action.type) {
-        case ADD_UPLOAD:
-        case EDIT_UPLOAD:
-            return merge({}, state, action.upload);
         case ADD_FILES:
             return Object.assign({}, state, {
                 files: state.files.concat(action.files),
@@ -31,6 +33,8 @@ function upload(state = initialUploadState, action) {
                     return !action.files.some(x => x.name === file.name);
                 }),
             });
+        case UPLOAD_NEW:
+            return Object.assign({}, state, { upload: action.upload.id });
         default:
             return state;
     }
@@ -39,7 +43,7 @@ function upload(state = initialUploadState, action) {
 const rootReducer = combineReducers({
     entities,
     router,
-    upload,
+    uiActive,
 });
 
 export default rootReducer;

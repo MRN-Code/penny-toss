@@ -114,3 +114,7 @@
 .file-adder-btn {
     vertical-align: top;
 }
+
+.file-item .media-left img {
+    width: 60px;
+}

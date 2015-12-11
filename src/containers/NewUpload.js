@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
-import { addFiles, addUpload, removeFiles } from '../actions';
+import { addFiles, removeFiles, uploadNew } from '../actions';
 import FileAdder from '../components/FileAdder';
 import FileItem from '../components/FileItem';
 
@@ -19,9 +19,9 @@ export default class NewUpload extends Component {
     handleNavigation(event) {
         event.preventDefault();
 
-        const { addUpload, files, pushState } = this.props;
+        const { files, pushState, uploadNew } = this.props;
 
-        addUpload({ files });
+        uploadNew({ files });
         pushState(null, '/edit');
     }
 
@@ -99,22 +99,20 @@ export default class NewUpload extends Component {
 }
 
 NewUpload.propTypes = {
-    addUpload: PropTypes.func.isRequired,
     files: PropTypes.array.isRequired,
     pushState: PropTypes.func.isRequired,
+    uploadNew: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
-    const { files } = state.upload;
+    const { files } = state.uiActive;
 
-    return {
-        files,
-    };
+    return { files };
 }
 
 export default connect(mapStateToProps, {
     addFiles,
-    addUpload,
-    removeFiles,
     pushState,
+    removeFiles,
+    uploadNew,
 })(NewUpload);
