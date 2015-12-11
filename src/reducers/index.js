@@ -8,7 +8,7 @@ const initialUploadState = {
     date: null,
     deviceId: null,
     files: [],
-    sessionId: null,
+    segmentIntervalId: null,
     studyId: null,
     ursi: null,
     user: 'test-username', //TODO: Don't hard code!

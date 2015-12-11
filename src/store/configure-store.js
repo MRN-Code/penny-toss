@@ -5,9 +5,10 @@ import routes from '../routes';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
+import fileUpload from '../middleware/file-upload';
 
 const finalCreateStore = compose(
-    applyMiddleware(thunk),
+    applyMiddleware(thunk, fileUpload),
     reduxReactRouter({ routes, createHistory }),
     applyMiddleware(createLogger())
 )(createStore);

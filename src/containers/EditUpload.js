@@ -18,13 +18,14 @@ class EditUpload extends Component {
     handleNewUpload(event) {
         event.preventDefault();
 
-        const { editUpload, files } = this.props;
-        const { device, sessionId, study, ursi, visitDate } = this.refs;
+        const { editUpload, files, pushState } = this.props;
+        const { device, segmentIntervalId, study, ursi, visitDate } = this.refs;
 
+        //TODO  Validate upload data
         editUpload({
             date: Date.now(),
             deviceId: device.getValue(),
-            sessionId: sessionId.getValue(),
+            segmentIntervalId: segmentIntervalId.getValue(),
             studyId: study.getValue(),
             ursi: ursi.getValue(),
             visitDate: visitDate.getValue(),
@@ -104,8 +105,8 @@ class EditUpload extends Component {
                             type="text" />
                         <Input
                             id="form-control-session-id"
-                            label="Session ID:"
-                            ref="sessionId"
+                            label="Segment Interval ID:"
+                            ref="segmentIntervalId"
                             type="text" />
                         <InputDatePicker
                             id="form-control-date"
