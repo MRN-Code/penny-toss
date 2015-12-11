@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Button, Label, Navbar, Nav, NavItem } from 'react-bootstrap';
 import { IndexLinkContainer, LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router';
 
 export default function Header(props) {
     const {
@@ -15,7 +16,7 @@ export default function Header(props) {
             <Navbar fixedTop fluid>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#">Penny Toss</a>
+                        <Link to="/">Penny Toss</Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
