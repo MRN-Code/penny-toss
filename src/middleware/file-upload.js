@@ -18,7 +18,7 @@ import {
 //TODO Use actual API
 // const API_URL = 'https://localcoin.mrn.org:8443/api/v1.3.0';
 const API_URL = 'http://localhost:7113/files';
-const CHUNK_SIZE = 4096;
+const CHUNK_SIZE = 1024;
 
 function tryDryRun(options) {
     return axios.post(API_URL + '/filerecords&dryrun=true', options);
@@ -66,6 +66,9 @@ export default store => next => action => {
             const upload = new tus.Upload(file, {
                 chunkSize: CHUNK_SIZE,
                 endpoint: API_URL + '/files',
+                onChunkComplete(chunkSize, bytesAccepted, bytesTotal) {
+                    console.log('onChunkComplete fired', chunkSize, bytesAccepted, bytesTotal);
+                },
                 onError(error) {
                     reject(error);
                 },
