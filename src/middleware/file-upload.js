@@ -66,8 +66,8 @@ export default store => next => action => {
     const options = {
         attributes: {},
         ursi: upload.ursi,
-        device_modality_detail_id: upload.deviceId,
-        segment_interval_id: upload.segmentIntervalId,
+        deviceModalityDetailId: upload.deviceId,
+        segmentIntervalId: upload.segmentIntervalId,
     };
 
     //TODO  Uncomment when API is ready
