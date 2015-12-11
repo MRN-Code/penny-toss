@@ -13,12 +13,11 @@ class ListUpload extends Component {
         this.renderUploads = this.renderUploads.bind(this);
     }
     renderUploads() {
-        const { activeFilter, uploads } = this.props;
-        const filteredUploads = uploads.filter(u => u.status === activeFilter);
+        const { uploads } = this.props;
 
         return (
             <ul className="uploads-list list-unstyled">
-                {filteredUploads.map((upload, index) => {
+                {uploads.map((upload, index) => {
                     return (
                         <li key={index}>
                             <Upload {...upload} />
@@ -42,16 +41,25 @@ class ListUpload extends Component {
 }
 
 ListUpload.propTypes = {
-    activeFilter: PropTypes.string.isRequired,
     uploads: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
+    const { files, uploads } = state.entities;
     const queryParams = state.router.location.search.substring(1).split('=');
     const activeFilter = queryParams[1] || 'active'; //TODO Use a query param parser
+    const filteredUploads = uploads
+        .filter(upload => upload.status === activeFilter)
+        .map(upload => {
+            return Object.assign({}, upload, {
+                files: upload.files.map(id => {
+                    return files.find(f => f.id === id);
+                })
+            });
+        });
+
     return {
-        activeFilter,
-        uploads: state.entities.uploads,
+        uploads: filteredUploads,
     };
 }
 

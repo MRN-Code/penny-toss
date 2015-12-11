@@ -5,6 +5,7 @@ import {
     Panel,
     ProgressBar
 } from 'react-bootstrap';
+import FileItem from './FileItem';
 
 export default function Upload(props) {
     const { deviceId, files, id, progress, status, studyId, ursi } = props;
@@ -54,6 +55,15 @@ export default function Upload(props) {
                 <li>Device ID: <strong>{deviceId}</strong></li>
                 <li>URSI: <strong>{ursi}</strong></li>
                 <li>Files #: <strong>{files.length}</strong></li>
+            </ul>
+            <ul className="list-unstyled">
+                {files.map((file, index) => {
+                    if (file) {
+                        return (
+                            <li key={index}>{file.name}</li>
+                        );
+                    }
+                })}
             </ul>
             <div className="clearfix">
                 {controls}
