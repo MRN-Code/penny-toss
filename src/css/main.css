@@ -8,6 +8,13 @@
     padding-top: 70px;
 }
 
+/** Header */
+@media (min-width: 768px) {
+    .navbar-right.btn {
+        margin-right: 0;
+    }
+}
+
 /** Footer */
 .site-footer p,
 .site-footer small {

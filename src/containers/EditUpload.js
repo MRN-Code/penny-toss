@@ -31,7 +31,7 @@ class EditUpload extends Component {
             ursi: ursi.getValue(),
             visitDate: visitDate.getValue(),
         });
-        pushState(null, '/list');
+        pushState(null, '/');
     }
     renderDeviceInput() {
         const { devices } = this.props;
